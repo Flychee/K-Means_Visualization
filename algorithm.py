@@ -25,8 +25,7 @@ class KM:
     def __init__(self, filename, center_num):
         self.point_matrix = [Point(element) for element in np.load(filename)]  # 迭代点矩阵
         self.center_list = []  # 中心点
-        self.center_num_limit = 10  # 中心点个数上限
-        self.center_num = center_num if 2 < center_num < self.center_num_limit else self.center_num_limit  # 中心点个数
+        self.center_num = center_num  # 中心点个数
         self.iter_limit = 20  # 迭代次数上限
 
     #  选取初始中心点
@@ -65,3 +64,19 @@ class KM:
             for temp, point in zip(temp_matrix, self.point_matrix):
                 balance_bool = True if temp.cluster == point.cluseter else False
             num += 1
+
+
+# 手肘法
+def SSE(filename):
+    result = []
+    for center_num in range(2, 10):
+        min_loss = 10000
+        for i in range(50):
+            km = KM(filename, center_num)
+            km.init_center()
+            km.iter()
+            loss = sum([i.min_distance for i in km.point_matrix]) / len(km.point_matrix)
+            if loss < min_loss:
+                min_loss = loss
+        result.append(min_loss)
+    print(result)
