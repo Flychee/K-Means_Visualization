@@ -36,6 +36,13 @@ class KM:
             self.center_list.append(temp.position)
             temp_matrix.remove(temp)
 
+    #  读取坐标
+    def read_position(self):
+        result = []
+        for point in self.point_matrix:
+            result.append(point.position)
+        return result
+
     # 更新函数
     def update(self):
         # 聚类更新
