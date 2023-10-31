@@ -11,13 +11,11 @@ class Point:
         self.cluster = None
 
     def choose_cluster(self, center_list):
-        index = 0
-        for center in center_list:
-            temp_result = np.linalg.norm(self.position, center)
-            if temp_result < self.min_distance:
-                self.min_distance = temp_result
-                index = cluster_center_list.index(center)
-        self.cluster = index
+        for index, center in enumerate(center_list):
+            temp_distance = np.linalg.norm(self.position - center)
+            if temp_distance < self.min_distance:
+                self.min_distance = temp_distance
+                self.cluster = index
 
 
 # 算法类
@@ -43,23 +41,30 @@ class KM:
             result.append(point.position)
         return result
 
+    def read_cluster(self):
+        result = []
+        for point in self.point_matrix:
+            result.append(point.cluster)
+        return result
+
     # 更新函数
     def update(self):
         # 聚类更新
         pm_len = len(self.point_matrix)
-        for num in range(pm_len):
-            self.point_matrix[num].choose_cluster(self.center_list)
+        for index in range(pm_len):
+            self.point_matrix[index].choose_cluster(self.center_list)
         # 中心点更新
         cl_len = len(self.center_list)
-        for num in range(cl_len):
-            temp_center = np.array([0, 0])
+        for index in range(cl_len):
+            temp_center = np.array([0, 0], dtype='float64')
             point_num = 0
             for point in self.point_matrix:
-                if point.cluster == num:
+                if point.cluster == index:
                     temp_center += point.position
                     point_num += 1
-            temp_center /= point_num
-            self.center_list[num] = temp_center
+            if point_num != 0:
+                temp_center /= point_num
+                self.center_list[index] = temp_center
 
     # 迭代函数
     def iter(self):
@@ -69,5 +74,5 @@ class KM:
             temp_matrix = copy.deepcopy(self.point_matrix)
             self.update()
             for temp, point in zip(temp_matrix, self.point_matrix):
-                balance_bool = True if temp.cluster == point.cluseter else False
+                balance_bool = True if temp.cluster == point.cluster else False
             num += 1
