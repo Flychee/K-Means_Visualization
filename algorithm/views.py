@@ -37,10 +37,16 @@ class KM:
 
     #  读取坐标
     def read_position(self):
-        result = []
+        none_result = []
+        cluster_result = [copy.deepcopy([]) for _ in self.center_list]
         for point in self.point_matrix:
-            result.append(point.position)
-        return result
+            if point.cluster is None:
+                none_result.append(point.position)
+            else:
+                cluster_result[point.cluster].append(point.position)
+        for item in range(len(cluster_result)):
+            cluster_result[item] = np.array(cluster_result[item])
+        return np.array(none_result), cluster_result
 
     def read_cluster(self):
         result = []
@@ -80,8 +86,3 @@ class KM:
 
 
 # Create your views here.
-def test(request):
-    road_file = 'static/datasets/001log_uniform_200.npy'
-    km = KM(road_file, 4)
-    stri = str(km.read_position())
-    return HttpResponse(stri)

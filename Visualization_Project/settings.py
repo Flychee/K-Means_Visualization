@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import picture.apps
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -37,7 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "algorithm.apps.AlgorithmConfig"
+    "algorithm.apps.AlgorithmConfig",
+    "picture.apps.PictureConfig",
 ]
 
 MIDDLEWARE = [
