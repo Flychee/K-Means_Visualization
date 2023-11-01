@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from algorithm import views
+from picture import views
 from django.urls import re_path as url
 from django.urls import include
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    # path("admin/", admin.site.urls),
     # path('', views.test),
     # path('trytry/', views.test1)
-    url(r'', include('picture.urls'))
+    path('a/pic/', views.index),
+    path('a/', views.open_visualization)
 ]

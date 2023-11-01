@@ -18,8 +18,10 @@ js_code_str = '''
 
 file_road = r'G:\LEARNING\Visualization_Project\static\datasets\009log_neat_square_225.npy'
 km = KM(file_road, 9)
-#km.init_center()
-#km.iter()
+
+
+# km.init_center()
+# km.iter()
 
 
 def index(request):
@@ -47,7 +49,7 @@ def index(request):
     scatter.set_series_opts(label_opts=opts.LabelOpts(is_show=False))
     scatter.set_global_opts(tooltip_opts=opts.TooltipOpts(is_show=False),
                             legend_opts=opts.LegendOpts(pos_left='center',
-                                                        pos_top='bottom',),
+                                                        pos_top='bottom', ),
                             xaxis_opts=opts.AxisOpts(max_=5,
                                                      min_=-5),
                             yaxis_opts=opts.AxisOpts(max_=5,
@@ -56,3 +58,7 @@ def index(request):
 
     scatter.overlap(ef_scatter)
     return HttpResponse(scatter.render_embed())
+
+
+def open_visualization(request):
+    return render(request, 'visualization.html', {'pic': index(request)})
