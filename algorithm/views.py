@@ -12,6 +12,7 @@ class Point:
         self.cluster = None
 
     def choose_cluster(self, center_list):
+        self.cluster = None
         for index, center in enumerate(center_list):
             temp_distance = np.linalg.norm(self.position - center)
             if temp_distance < self.min_distance:
@@ -30,6 +31,12 @@ class KM:
 
     #  选取初始中心点
     def init_center(self):
+        # 重置中心点列表
+        self.center_list = []
+        # 重置类归属
+        pm_len = len(self.point_matrix)
+        for index in range(pm_len):
+            self.point_matrix[index].choose_cluster(self.center_list)
         temp_matrix = copy.deepcopy(self.point_matrix)
         for _ in range(self.center_num):
             temp = random.choice(temp_matrix)
@@ -84,6 +91,3 @@ class KM:
             for temp, point in zip(temp_matrix, self.point_matrix):
                 balance_bool = True if temp.cluster == point.cluster else False
             num += 1
-
-
-# Create your views here.

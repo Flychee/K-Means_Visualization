@@ -10,12 +10,6 @@ from pyecharts.charts import Scatter, EffectScatter
 from pyecharts.commons.utils import JsCode
 from pyecharts.globals import ThemeType
 
-js_code_str = '''
-            function(params){
-            return params.data.text;
-            }
-            '''
-
 file_road = r'G:\LEARNING\Visualization_Project\static\datasets\009log_neat_square_225.npy'
 km = KM(file_road, 9)
 
@@ -25,9 +19,20 @@ km = KM(file_road, 9)
 
 
 def index(request):
+    init_center_point = '初始化中心点'
+    update_point = '迭代一次'
+    iter_point = '迭代至最终结果'
+    if request.method == 'POST':
+        point = request.POST['func']
+        if point == init_center_point:
+            km.init_center()
+        elif point == update_point:
+            km.update()
+        elif point == iter_point:
+            km.iter()
+
     scatter = Scatter(init_opts=opts.InitOpts(width="500px", height="500px", theme=ThemeType.DARK))
     none_points, cluster_points = km.read_position()
-    print(none_points.dtype)
     # 描绘散点图
     if len(none_points) > 0:
         scatter.add_xaxis(xaxis_data=none_points.T[0])

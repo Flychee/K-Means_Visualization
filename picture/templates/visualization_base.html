@@ -7,19 +7,11 @@
 </head>
 <body>
     {% block pic_action%}{% endblock %}
-    <form action="/a">
+    <form action="/a/" method="POST">
         {% csrf_token %}
-        <input type="submit", value="初始化">
-    </form>
-
-    <form action="/a">
-        {% csrf_token %}
-        <input type="submit", value="迭代一次">
-    </form>
-
-    <form action="/a">
-        {% csrf_token %}
-        <input type="submit", value="迭代至最终结果">
+        <input type="submit" name="func" value="初始化中心点">
+        <input type="submit" name="func" value="迭代一次">
+        <input type="submit" name="func" value="迭代至最终结果">
     </form>
 </body>
 </html>
