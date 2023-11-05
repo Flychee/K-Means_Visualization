@@ -12,7 +12,6 @@ class Point:
         self.cluster = None
 
     def choose_cluster(self, center_list):
-        self.cluster = None
         for index, center in enumerate(center_list):
             temp_distance = np.linalg.norm(self.position - center)
             if temp_distance < self.min_distance:
@@ -36,7 +35,8 @@ class KM:
         # 重置类归属
         pm_len = len(self.point_matrix)
         for index in range(pm_len):
-            self.point_matrix[index].choose_cluster(self.center_list)
+            self.point_matrix[index].cluster = None
+            self.point_matrix[index].min_distance = np.inf
         temp_matrix = copy.deepcopy(self.point_matrix)
         for _ in range(self.center_num):
             temp = random.choice(temp_matrix)
