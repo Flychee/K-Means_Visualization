@@ -36,7 +36,6 @@ class KM:
         pm_len = len(self.point_matrix)
         for index in range(pm_len):
             self.point_matrix[index].cluster = None
-            self.point_matrix[index].min_distance = np.inf
         temp_matrix = copy.deepcopy(self.point_matrix)
         for _ in range(self.center_num):
             temp = random.choice(temp_matrix)
@@ -67,6 +66,7 @@ class KM:
         # 聚类更新
         pm_len = len(self.point_matrix)
         for index in range(pm_len):
+            self.point_matrix[index].min_distance = np.inf
             self.point_matrix[index].choose_cluster(self.center_list)
         # 中心点更新
         cl_len = len(self.center_list)
