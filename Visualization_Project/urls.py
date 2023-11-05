@@ -24,6 +24,7 @@ urlpatterns = [
     # path("admin/", admin.site.urls),
     # path('', views.test),
     # path('trytry/', views.test1)
-    path('a/pic/', views.index),
+    path('a/pic/', views.picture),
+    path('a/', views.choose),
     path('a/', views.open_visualization)
 ]

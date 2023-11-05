@@ -4,14 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <title>K-Means可视化平台</title>
+    <style>
+        #choose{
+            position: absolute;
+            right: 0;
+        }
+    </style>
 </head>
 <body>
-    {% block pic_action%}{% endblock %}
-    <form action="/a/" method="POST">
-        {% csrf_token %}
-        <input type="submit" name="func" value="初始化中心点">
-        <input type="submit" name="func" value="迭代一次">
-        <input type="submit" name="func" value="迭代至最终结果">
-    </form>
+    <div id="picture">
+        {% block pic_action%}{% endblock %}
+        <form action="/a/" method="POST">
+            {% csrf_token %}
+            <input type="submit" name="func" value="初始化中心点">
+            <input type="submit" name="func" value="迭代一次">
+            <input type="submit" name="func" value="迭代至最终结果">
+        </form>
+    </div>
+    
+    <div id="choose">
+        <ul>
+            {% for frl in file_road_list %}
+                <li>
+                    <form id='pic_choose' action="/a/" method="POST">
+                        {% csrf_token %}
+                        <input hidden name="pic_road" value= {{ frl }}>
+                        <input type="image" name="pic_show" src={% static frl %} width="520px" height="520px">
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>

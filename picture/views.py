@@ -10,19 +10,30 @@ from pyecharts.charts import Scatter, EffectScatter
 from pyecharts.commons.utils import JsCode
 from pyecharts.globals import ThemeType
 
+file_road_list = ['img/' + str(i) + '.png' for i in range(1, 11)]
+datasets_road = {}
+for i in range(1, 11):
+    datasets_road.update({'img/' + str(i) + '.png': 'datasets/' + str(i) + '.npy'})
 file_road = r'G:\LEARNING\Visualization_Project\static\datasets\009log_neat_square_225.npy'
-km = KM(file_road, 9)
+km = KM(9)
 
 
 # km.init_center()
 # km.iter()
 
+# 通过图片选取矩阵
+def choose(request):
+    if request.method == 'POST' and 'pic_road' in request.POST:
+        km.init_matrix('static/' + datasets_road[request.POST['pic_road']])
+    return render(request, 'visualization.html', {'pic': picture(request), 'file_road_list': file_road_list})
 
-def index(request):
+
+# 算法可视化
+def picture(request):
     init_center_point = '初始化中心点'
     update_point = '迭代一次'
     iter_point = '迭代至最终结果'
-    if request.method == 'POST':
+    if request.method == 'POST' and 'func' in request.POST:
         point = request.POST['func']
         if point == init_center_point:
             km.init_center()
@@ -66,4 +77,5 @@ def index(request):
 
 
 def open_visualization(request):
-    return render(request, 'visualization.html', {'pic': index(request)})
+    print(request.POST)
+    return render(request, 'visualization.html', {'pic': picture(request), 'file_road_list': file_road_list})

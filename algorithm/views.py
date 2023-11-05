@@ -21,12 +21,17 @@ class Point:
 
 # 算法类
 class KM:
-    def __init__(self, filename, center_num):
-        read_npy = np.load(filename).astype(np.float64)
-        self.point_matrix = [Point(element) for element in read_npy]  # 迭代点矩阵
+    def __init__(self, center_num):
+        self.point_matrix = []  # 迭代点矩阵
         self.center_list = []  # 中心点
         self.center_num = center_num  # 中心点个数
         self.iter_limit = 20  # 迭代次数上限
+
+    #  生成矩阵
+    def init_matrix(self, filename):
+        read_npy = np.load(filename).astype(np.float64)
+        self.point_matrix = [Point(element) for element in read_npy]
+        self.center_list = []  # 中心点
 
     #  选取初始中心点
     def init_center(self):
